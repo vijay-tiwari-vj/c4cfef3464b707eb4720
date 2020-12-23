@@ -6,7 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import { colors } from '../../styles';
 
-import { Home, Country, Weather } from '../../screens/main';
+import { Home, Asteroid } from '../../screens/main';
 
 import Constants from '../../utils/Constants';
 const { Screens } = Constants.NAVIGATION.routes;
@@ -19,17 +19,11 @@ export const homeNavigator = createStackNavigator({
     }),
   },
   Country: {
-    screen: Country,
+    screen: Asteroid,
     navigationOptions: () => ({
       header: null
     }),
-  },
-  Weather: {
-    screen: Weather,
-    navigationOptions: () => ({
-      header: null
-    }),
-  },
+  }
 },
   {
     initialRouteName: Screens.HOME,

@@ -8,7 +8,7 @@ import Button from "../../../components/button";
 import Toast from "../../../utils/Toast";
 import Validator from "../../../utils/ValidateUtil";
 
-import { countryService } from "../../../services";
+import { asteroidService, randomService } from "../../../services";
 
 import { colors } from "../../../styles";
 
@@ -39,18 +39,32 @@ const styles = StyleSheet.create({
 
 function Home({ navigation }) {
   const [isLoading, setIsLoading] = React.useState();
-  const [country, setCountry] = React.useState();
+  const [asteroid, setAsteroid] = React.useState();
+  const [ randomAsteroid, setRandomAsteroid] = React.useState({});
+  const [ firstTime, setFirstTime] =  React.useState(false);
 
-  function handleCountryResponse(countryData) {
-    navigation.navigate('Country', { countryData });
+  function handleAsteroidResponse(asteroidData) {
+    navigation.navigate('Asteroid', { asteroidData });
   }
 
-  function handleSubmit() {
-    if (!Validator.validateFeild(country)) return Toast.warning("please fill the country");
+  function handleRandom() {
     setIsLoading(true);
-    countryService
-      .getCountry(country)
-      .then(handleCountryResponse)
+    randomService
+      .getRandom()
+      .then(asteroid => {
+        setRandomAsteroid(asteroid);
+        setFirstTime(true);
+      })
+      .catch(Toast.error)
+      .finally(() => setIsLoading(false));
+  };
+
+  function handleSubmit(id) {
+    if (!Validator.validateFeild(id)) return Toast.warning("please fill the asteroid ID");
+    setIsLoading(true);
+    asteroidService
+      .getAsteroid(asteroid)
+      .then(handleAsteroidResponse)
       .catch(Toast.error)
       .finally(() => setIsLoading(false));
   };
@@ -64,16 +78,36 @@ function Home({ navigation }) {
 
         <Item rounded style={styles.input} >
           <Input
-            placeholder='Enter country'
+            placeholder='Enter Asteroid ID'
             placeholderTextColor={colors.warmGrey}
-            value={country}
-            onChangeText={country => setCountry(country)}
+            value={asteroid}
+            onChangeText={asteroid => setAsteroid(asteroid)}
           />
         </Item>
         <View style={styles.buttonContainer}>
           <Button isLoading={isLoading} onPress={handleSubmit} buttonTitle='SUBMIT' />
         </View>
 
+        <View style={styles.buttonContainer}>
+          <Button isLoading={isLoading} onPress={() => handleRandom()} buttonTitle='Random Asteroid' />
+        </View>
+
+      </View>
+      <View>
+      {
+        firstTime
+          ? (
+          <View style={styles.asteroidInfo}>
+            <Text style={{ fontSize: 16 }}>Asteroid name: {randomAsteroid.name.substring(0, 25) + "..."}</Text>
+            <Text style={{ fontSize: 16 }}> {randomAsteroid.nasa_jpl_url}</Text>
+            <Text style={{ fontSize: 12 }}> {randomAsteroid.is_potentially_hazardous_asteroid}</Text>
+          </View>
+        ) : (
+          <View style={styles.asteroidInfo}>
+            <Text> Select a random asteroid </Text>
+          </View>
+        )
+      }
       </View>
 
     </View>

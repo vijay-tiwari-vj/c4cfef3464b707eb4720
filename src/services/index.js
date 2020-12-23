@@ -1,7 +1,7 @@
-import { countryService } from "./country.service";
-import { weatherService } from "./weather.service";
+import { asteroidService } from "./asteroid.service";
+import { randomService } from "./random.service";
 
 export {
-  countryService,
-  weatherService
+  asteroidService,
+  randomService
 };

@@ -1,5 +1,4 @@
 import Home from './home';
-import Country from './country';
-import Weather from './weather';
+import Asteroid from './asteroid';
 
-export { Home, Country, Weather };
+export { Home, Asteroid };

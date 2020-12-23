@@ -1,19 +1,18 @@
 const Constants = {
   URLS: {
-    country_api: {
-      BASE_URL: 'https://restcountries.eu/rest/v2',
+    asteroid_api: {
+      BASE_URL: 'https://api.nasa.gov/neo/rest/v1/neo',
+      API_KEY: 'J4XBFyC6XAtOu9HV3BxelUeR4XXIE3QwcLXemScf'
     },
-    weather_api: {
-      BASE_URL: 'http://api.weatherstack.com',
-      API_KEY: '31328b8ae756c1e5c9c38a700f7b689e',
+    random_api: {
+      BASE_URL: 'https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=DEMO_KEY',
     },
   },
   NAVIGATION: {
     routes: {
       Screens: {
         HOME: 'Home',
-        COUNTRY: 'Country',
-        Weather: 'Weather'
+        ASTEROID: 'Asteroid',
       },
       Tabs: {
         HOME_TAB: 'Home',
